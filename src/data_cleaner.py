@@ -17,7 +17,7 @@ def renewable_energy_production_frame(df):
     # country, year, bio_fuel, hydro, renewables, other_renewables, solar, wind, electricity_demand, electricity_demand_per_capita, electricity_generation
     pass
 def renewable_energy_consumption_frame(df):
-    #country, year, bio_fuel, hydro, renewables, other_renewables, solar, wind
+    # country, year, bio_fuel, hydro, renewables, other_renewables, solar, wind
     pass
 
 def GDP_and_fossil_energy_consumption(df):
