@@ -24,7 +24,8 @@ def plot_comparison_demand_production(df):
     sns.histplot(data=df_demand_production, x='year', hue='Tipo', weights='Valor', multiple='dodge', bins=22)
     plt.title('Comparação entre Demanda e Produção de Energia Renovável por Ano')
     plt.xlabel('Ano')
-    plt.ylabel('Quantidade')
+    plt.ylabel('TWh')
+    plt.legend(labels=['Demanda de energia', 'Produção de energia renovável'])
     
     # Salvar gráfico
     plt.savefig('../plots/demand_production.png', dpi=300, format='png')
@@ -51,7 +52,7 @@ def plot_variation_demand_production(df):
     # Salvar gráfico
     plt.savefig('../plots/variation_demand_production.png', dpi=300, format='png')
 
-
+plot_variation_demand_production(df)
 
 
 
