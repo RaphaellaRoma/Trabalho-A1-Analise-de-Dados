@@ -17,7 +17,7 @@ def renewable_energy_production_frame(df):
     # country, year, bio_fuel, hydro, renewables, other_renewables, solar, wind, electricity_demand, electricity_demand_per_capita, electricity_generation
     pass
 def renewable_energy_consumption_frame(df):
-    #country, year, bio_fuel, hydro, renewables, other_renewables, solar, wind
+    # country, year, bio_fuel, hydro, renewables, other_renewables, solar, wind
     pass
 
 def GDP_and_fossil_energy_consumption(df):
@@ -35,5 +35,40 @@ def GDP_and_fossil_energy_consumption(df):
     
     return new_df
 
-
 GDP_and_fossil_energy_frame = GDP_and_fossil_energy_consumption(df)
+
+
+# Limpeza de dados para a Hipótese 3
+def demand_and_production(df):
+    # Colunas necessárias para a análise 
+    df_columns_needed = df[['country','year','electricity_demand','renewables_electricity']]
+    
+    # Eliminação das linhas que não contenham a demanda ou a produção
+    no_nulls_rows = df_columns_needed.dropna(subset=['electricity_demand','renewables_electricity'], how='any')
+    
+    # Praticamente todos países contém dados entre 2000 e 2021, então a analíse será feita nesse período 
+    df_clean = no_nulls_rows[(no_nulls_rows['year'] >= 2000) & (no_nulls_rows['year'] <= 2021)]
+    
+    return df_clean
+
+demand_production_frame = demand_and_production(df)
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
