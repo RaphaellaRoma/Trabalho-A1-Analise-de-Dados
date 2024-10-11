@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Oct  8 11:52:47 2024
-
-@author: raphy
-"""
 import numpy as np
 import pandas as pd
 
@@ -42,7 +36,7 @@ GDP_and_fossil_energy_frame = GDP_and_fossil_energy_consumption(df)
 def demand_and_production(df):
     # A coluna country contém continentes e blocos econômicos, como só queremos analisar os países vamos eliminar os que não são
     # Criamos uma lista com todos os nomes que aparecem na coluna country
-    unique_countries = df['country'].unique().tolist() 
+    # unique_countries = df['country'].unique().tolist() 
     # print(unique_countries)
     # Usando o chatgpt para avaliar quais nomes não são de países, geramos a lista non_countries
     non_countries = [
@@ -73,7 +67,7 @@ def demand_and_production(df):
     df = df[~df['country'].isin(non_countries)]
     
     # Colunas necessárias para a análise 
-    df_columns_needed = df[['country','year','electricity_demand','renewables_electricity']]
+    df_columns_needed = df[['country','year','gdp','electricity_demand','renewables_electricity']]
     
     # Eliminação das linhas que não contenham a demanda ou a produção
     no_nulls_rows = df_columns_needed.dropna(subset=['electricity_demand','renewables_electricity'], how='any')
