@@ -15,11 +15,13 @@ df = pd.DataFrame(data_cleaner.GDP_and_fossil_energy_frame)
 # df.set_index("country", inplace= True)
 #df.drop('World', axis=0, inplace=True)
 
+
+
 print(df.index)
 columns = df.columns
 
-df_auxiliary = df.set_index(['country', 'year'])
-
+df_auxiliary = df.set_index(['country', 'year']).drop("Sri Lanka").drop("Iceland").drop("Cyprus")
+# o Sri Lanka e outros foram removidos pois não possuem dados suficientes de consumo para serem representativos
 
 
 def plot_country_energy_gdp(df, country, ax, column, colors):
@@ -145,42 +147,8 @@ def world(df, energy):
 
 def energy_gdp_correlation(df):
 
-    # Dicionário para armazenar as contagens de correlação
-    correlation_counts = {
-        'Energy Type': [],
-        'Alta Correlação': [],
-        'Correlação Moderada': [],
-        'Baixa Correlação': []
-    }
 
-    # Calcular as contagens para cada tipo de energia
-    for energy, col in zip(['Carvão', 'Gás', 'Petróleo'], 
-                            ['coal_cons_per_capita', 'gas_energy_per_capita', 'oil_energy_per_capita']):
-        counts = {'high': 0, 'moderate': 0, 'low': 0}
-
-        # Agrupar por país
-        for country, group in df.groupby('country'):
-            group_clean = group.dropna(subset=['gdp', col])
-            if len(group_clean) > 1:
-                corr_matrix = group_clean[['gdp', col]].corr()
-                correlation_value = corr_matrix.iloc[0, 1]
-
-                # Classificar a correlação
-                if abs(correlation_value) > 0.7:
-                    counts['high'] += 1
-                elif abs(correlation_value) > 0.3:
-                    counts['moderate'] += 1
-                else:
-                    counts['low'] += 1
-
-        # Adicionar os resultados ao dicionário de contagens
-        correlation_counts['Energy Type'].append(energy)
-        correlation_counts['Alta Correlação'].append(counts['high'])
-        correlation_counts['Correlação Moderada'].append(counts['moderate'])
-        correlation_counts['Baixa Correlação'].append(counts['low'])
-
-    # DataFrame das contagens
-    correlation_counts_df = pd.DataFrame(correlation_counts)
+    correlation_counts_df = data_cleaner.correlations_counts(df)
 
 
     correlation_counts_df.set_index('Energy Type').plot(kind='bar', figsize=(10, 6))
@@ -196,3 +164,8 @@ def energy_gdp_correlation(df):
 
 
 energy_gdp_correlation(df)
+
+
+
+
+
