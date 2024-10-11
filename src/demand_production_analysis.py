@@ -25,7 +25,7 @@ def plot_comparison_demand_production(df):
     plt.title('Comparação entre Demanda e Produção de Energia Renovável por Ano')
     plt.xlabel('Ano')
     plt.ylabel('TWh')
-    plt.legend(labels=['Demanda de energia', 'Produção de energia renovável'])
+    plt.legend(labels=['Produção de energia renovável', 'Demanda de energia'])
     
     # Salvar gráfico
     plt.savefig('../plots/demand_production.png', dpi=300, format='png')
@@ -40,8 +40,8 @@ def plot_variation_demand_production(df):
     
     # Line Plot que compara a taxa de variação da demanda com a taxa de variação da produção de energia renovável por ano
     plt.figure(figsize=(10,6))
-    sns.lineplot(x='year', y='variation_demand', data=df_grouped, label='Taxa de Variação - Produção', marker='o')
-    sns.lineplot(x='year', y='variation_production', data=df_grouped, label='Taxa de Variação - Demanda', marker='o')
+    sns.lineplot(x='year', y='variation_demand', data=df_grouped, label='Taxa de Variação - Demanda', marker='o')
+    sns.lineplot(x='year', y='variation_production', data=df_grouped, label='Taxa de Variação - Produção', marker='o')
 
     # Adicionar títulos e rótulos
     plt.title('Comparação entre Taxa de Variação da Demanda e Taxa de Variação de Energia Renovável')
