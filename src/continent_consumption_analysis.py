@@ -38,8 +38,8 @@ def plot_renewable_energy_consumption_continental(df: pd.DataFrame) -> None:
 
     # Adjusts the plot
     grouped_data.plot(x='year', ylabel='Terrawatt Hour', kind='bar', stacked=True,figsize=(20,6),
-            title='Global Renewable Consumption 1990 - 2024')
-    plt.savefig('.\plots\Global_Renewable_Consumption_1990_2024.png')
+            title='Global Renewable Consumption 1990 - 2022')
+    plt.savefig('.\plots\Global_Renewable_Consumption_1990_2022.png')
     plt.show()
     plt.close()
 
@@ -61,8 +61,8 @@ def plot_renewable_energy_consumption_per_capita(df: pd.DataFrame) -> None:
 
     # Adjusts the plot
     grouped_data.plot(x='year', ylabel='Terrawatt Hour', kind='bar', stacked=True,figsize=(20,6),
-            title='Global Renewable Consumption per Capita 1990 - 2024')
-    plt.savefig('.\plots\Global_Renewable_Consumption_per_Capita_1990_2024.png')
+            title='Global Renewable Consumption per Capita 1990 - 2022')
+    plt.savefig('.\plots\Global_Renewable_Consumption_per_Capita_1990_2022.png')
     plt.show()
     plt.close()
 
