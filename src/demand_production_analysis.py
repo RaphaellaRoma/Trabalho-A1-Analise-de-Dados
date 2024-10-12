@@ -88,21 +88,26 @@ def plot_variation_in_the_richest_countries(df):
     sns.lineplot(x='year', y='variation_demand', data=df_rich_1, label='Taxa de Variação - Demanda', marker='o', ax=axes[0])
     sns.lineplot(x='year', y='variation_production', data=df_rich_1, label='Taxa de Variação - Produção', marker='o', ax=axes[0])
     axes[0].set_title(f"{rich_1}")
+    axes[0].set_xlabel('Ano')
+    axes[0].set_ylabel('Taxa de Variação (%)')
+    axes[0].tick_params(axis='x', rotation=45)
     
     sns.lineplot(x='year', y='variation_demand', data=df_rich_2, label='Taxa de Variação - Demanda', marker='o', ax=axes[1])
     sns.lineplot(x='year', y='variation_production', data=df_rich_2, label='Taxa de Variação - Produção', marker='o', ax=axes[1])
     axes[1].set_title(f"{rich_2}")
+    axes[1].set_xlabel('Ano')
+    axes[1].set_ylabel('Taxa de Variação (%)')
+    axes[1].tick_params(axis='x', rotation=45)
     
     sns.lineplot(x='year', y='variation_demand', data=df_rich_3, label='Taxa de Variação - Demanda', marker='o', ax=axes[2])
     sns.lineplot(x='year', y='variation_production', data=df_rich_3, label='Taxa de Variação - Produção', marker='o', ax=axes[2])
     axes[2].set_title(f"{rich_3}")
+    axes[2].set_xlabel('Ano')
+    axes[2].set_ylabel('Taxa de Variação (%)')
+    axes[2].tick_params(axis='x', rotation=45)
 
     # Adicionar títulos e rótulos
     fig.suptitle('Comparação entre Taxa de Variação da Demanda e Taxa de Variação de Energia Renovável dos 3 países mais ricos')
-    plt.xlabel('Ano')
-    plt.ylabel('Taxa de Variação (%)')
-    plt.legend()
-    plt.xticks(rotation=45)
     
     # Salvar gráfico
     plt.savefig('../plots/variation_in_the_richest_countries.png', dpi=300, format='png')
