@@ -13,3 +13,5 @@ Desenvolvemos hipóteses baseadas em dados globais de produção e consumo de en
 * `plots`: contém as visualizações finais produzidas.
 * `src`: contém os scripts Python, incluindo funções para limpeza de dados e plotagem de gráficos.
 * `requirements`: Lista as dependências necessárias e suas versões para execução da análise.
+
+  Obs: Cada módulo deverá ser executado separadamente.
