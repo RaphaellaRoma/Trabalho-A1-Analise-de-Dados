@@ -10,6 +10,19 @@ df = pd.DataFrame(data_cleaner.demand_production_frame)
 df_grouped = df.groupby('year').sum().reset_index()
 
 def plot_comparison_demand_production(df_grouped):
+    """
+    Gera um gráfico de barras que compara a demanda de energia e a produção de energia renovável por ano.
+
+    Parameters
+    ----------
+    df_grouped : DataFrame
+        DataFrame agrupado por ano, contendo as colunas 'electricity_demand' e 'renewables_electricity' que representam a demanda e a produção de energia renovável.
+
+    Returns
+    -------
+    None.
+        O gráfico é salvo como um arquivo PNG no diretório '../plots/'.
+    """
     # Colunas que serão usadas para fazer o gráfico
     df_demand_production = pd.melt(df_grouped, id_vars='year', value_vars=['electricity_demand', 'renewables_electricity'], var_name='Tipo', value_name='Valor')
     # Gráfico de barras que compara a demanda e a produção por ano
@@ -27,6 +40,19 @@ def plot_comparison_demand_production(df_grouped):
 plot_comparison_demand_production(df_grouped)
 
 def plot_variation_demand_production(df_grouped):
+    """
+    Gera um gráfico de linhas que compara a taxa de variação anual da demanda de energia e a taxa de variação anual da produção de energia renovável.
+
+    Parameters
+    ----------
+    df_grouped : DataFrame
+        DataFrame agrupado por ano, contendo as colunas 'electricity_demand' e 'renewables_electricity'. As taxas de variação são calculadas usando a função pct_change().
+
+    Returns
+    -------
+    None.
+        O gráfico é salvo como um arquivo PNG no diretório '../plots/'.
+    """
     # Calcular a taxa de variação da demanda por ano usando o método pct_change()
     df_grouped['variation_demand'] = df_grouped['electricity_demand'].pct_change() * 100
     # Calcular a taxa de variação da produção por ano usando o método pct_change()
@@ -49,6 +75,19 @@ def plot_variation_demand_production(df_grouped):
 plot_variation_demand_production(df_grouped)    
 
 def plot_variation_in_the_richest_countries(df):
+    """
+    Gera gráficos de linha que comparam a taxa de variação anual da demanda de energia e da produção de energia renovável nos três países mais ricos (com base na média do PIB).
+
+    Parameters
+    ----------
+    df : DataFrame
+        DataFrame contendo as colunas 'country', 'year', 'gdp', 'electricity_demand' e 'renewables_electricity'. A função calcula a taxa de variação da demanda e da produção para os três países com maior média de PIB.
+
+    Returns
+    -------
+    None.
+        O gráfico é salvo como um arquivo PNG no diretório '../plots/'.
+    """
     # Os países mais ricos serão aqueles com maior média do pib
     gdp_mean = df.groupby('country')['gdp'].mean()
     
