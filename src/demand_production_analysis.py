@@ -109,7 +109,10 @@ def plot_variation_in_the_richest_countries(df):
      
 plot_variation_in_the_richest_countries(df)
 
-
+# Cálculos para verificar correlações 
+# Cálculo da correlação entre as duas variáveis (geração e produção global)  
+correlation = np.corrcoef(df_grouped['electricity_demand'], df_grouped['renewables_electricity'])[0, 1]  
+print(correlation)
 
 
 
