@@ -78,7 +78,7 @@ def demand_and_production(df):
     # Eliminação das linhas que não contenham a demanda ou a produção
     no_nulls_rows = df_columns_needed.dropna(subset=['electricity_demand','renewables_electricity'], how='any')
     
-    # Praticamente todos países contém dados entre 2000 e 2021, então a analíse será feita nesse período 
+    # Praticamente todos países contém dados entre 2000 e 2021, então a análise será feita nesse período 
     df_clean = no_nulls_rows[(no_nulls_rows['year'] >= 2000) & (no_nulls_rows['year'] <= 2021)]
     
     return df_clean
@@ -152,8 +152,48 @@ def renewable_energy_consumption_by_continent(df: pd.DataFrame) -> pd.DataFrame:
 renewable_energy_consumption_continental = renewable_energy_consumption_by_continent(df)
 
     
+# Limpeza de dados para a Hipótese 1
+def consumption_and_population(df):
     
+    # Colunas necessárias para a análise
+    df_consumption_and_population = df[["country", "year", "population", "primary_energy_consumption"]]
     
+    # Eliminação das linhas que não contém o consumo e as populações
+    no_nulls_row = df_consumption_and_population.dropna(subset=["population", "primary_energy_consumption"], how="any")
+    
+    # Todos os dados de no_nulls_row são necessários para a análise
+    df_clean = no_nulls_row
+    
+    return df_clean
+
+consumption_population = consumption_and_population(df)
+
+def energy_balance_and_import(df):
+    
+    # Criação do total de produções baseado nas colunas de produções informadas no df
+    df_productions = pd.DataFrame()    
+    df_productions["total_productions"] = df["coal_production"] + df["gas_production"] + df["oil_production"]
+    
+    # Criação do balanço de energia baseada na coluna da demanda de eletricidade informada no df e na coluna do total de produção informada em df_productions
+    df_energy_balance = pd.DataFrame()
+    df_energy_balance["energy_balance"] = df["electricity_demand"] - df_productions["total_productions"]
+    
+    # Colunas necessárias para a análise
+    df_energy_balance_and_import = pd.DataFrame()
+
+    df_energy_balance_and_import["year"] = df[["year"]]
+    df_energy_balance_and_import["energy_balance"] = df_energy_balance["energy_balance"]
+    df_energy_balance_and_import["net_elec_imports"] = df["net_elec_imports"]
+    
+    # Eliminação das linhas que não contém o balanço de energia e as importações
+    no_nulls_row = df_energy_balance_and_import.dropna(subset=["energy_balance", "net_elec_imports"], how="any")
+    
+    # Quando energy_balance e net_elec_imports são positivos, significa que houve demanda reprimida ou necessidade de importação, então a análise será feita para ambos os dados positivos
+    df_clean = no_nulls_row[(no_nulls_row["energy_balance"] > 0) & (no_nulls_row["net_elec_imports"] > 0)]
+    
+    return df_clean
+
+balance_import = energy_balance_and_import(df)
     
     
     
