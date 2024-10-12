@@ -14,13 +14,13 @@ df = pd.DataFrame(data_cleaner.renewable_energy_consumption_continental)
 df['total_renewable_consumption'] = (
     df['biofuel_consumption'] +
     df['hydro_consumption'] +
-    df['low_carbon_consumption'] +
-    df['nuclear_consumption'] +
     df['other_renewable_consumption'] +
     df['renewables_consumption'] +
     df['solar_consumption'] +
     df['wind_consumption']
 )
+
+df['renewable_consumption_per_capita'] = df['total_renewable_consumption'] / df['population']
 
 # Plots the stacked bar chart
 def plot_renewable_energy_consumption_continental(df: pd.DataFrame) -> None:
@@ -38,10 +38,33 @@ def plot_renewable_energy_consumption_continental(df: pd.DataFrame) -> None:
 
     # Adjusts the plot
     grouped_data.plot(x='year', ylabel='Terrawatt Hour', kind='bar', stacked=True,figsize=(20,6),
-            title='Global Renewable Consumption 1990 - 2024')
-    plt.savefig('.\plots\Global_Renewable_Consumption_1990_2024.png')
+            title='Global Renewable Consumption 1990 - 2022')
+    plt.savefig('.\plots\Global_Renewable_Consumption_1990_2022.png')
     plt.show()
     plt.close()
 
 # Calls the function to plot the stacked bar chart  
 plot_renewable_energy_consumption_continental(df)
+
+def plot_renewable_energy_consumption_per_capita(df: pd.DataFrame) -> None:
+    """
+    Plots a stacked bar chart with the total renewable energy consumption per capita by continent over the years.
+
+    Parameters
+    ----------
+    df : pd.DataFrame
+        The DataFrame with the data of the continents.
+    """
+    # Groups the data by year and continent
+    grouped_data = df.groupby(['year', 'continent'])['renewable_consumption_per_capita'].sum().unstack()
+    grouped_data.reset_index(level=0, inplace=True)
+
+    # Adjusts the plot
+    grouped_data.plot(x='year', ylabel='Terrawatt Hour', kind='bar', stacked=True,figsize=(20,6),
+            title='Global Renewable Consumption per Capita 1990 - 2022')
+    plt.savefig('.\plots\Global_Renewable_Consumption_per_Capita_1990_2022.png')
+    plt.show()
+    plt.close()
+
+# Calls the function to plot the stacked bar chart
+plot_renewable_energy_consumption_per_capita(df)

@@ -1,7 +1,7 @@
 import numpy as np
 import pandas as pd
 
-df = pd.read_csv("..\data\World Energy Consumption.csv")
+df = pd.read_csv(".\data\World Energy Consumption.csv")
 #print(df.info())
 #print(df.head())
 
@@ -171,7 +171,7 @@ countries_by_continent_map = {
     "Oceania": ["Australia", "Fiji", "Kiribati", "Marshall Islands", "Micronesia", "Nauru", "New Zealand", "Palau", "Papua New Guinea", "Samoa", "Solomon Islands", "Tonga", "Tuvalu", "Vanuatu"]
 }
 
-# Filters lines that are countries and are defined in the dictionary
+# Filters rows that are countries and are defined in the dictionary
 def continent_identifier(country: str) -> str:
     """
     Identifies the continent of a country.
@@ -216,11 +216,13 @@ def renewable_energy_consumption_by_continent(df: pd.DataFrame) -> pd.DataFrame:
     # Creates a new column with the continent of each country
     df["continent"] = df["country"].apply(continent_identifier)
     # Filters the columns of interest
-    df_continents = df[["continent", "year", "biofuel_consumption", "hydro_consumption", "other_renewable_consumption", "renewables_consumption", "solar_consumption", "wind_consumption"]]
-    # Filters the lines without empty values
-    no_nulls_rows = df_continents.dropna(subset=["biofuel_consumption", "hydro_consumption", "other_renewable_consumption", "renewables_consumption", "solar_consumption", "wind_consumption"], how='any')
-    # Filters the valid lines with years between 1990 and 2024
-    new_df = no_nulls_rows[(no_nulls_rows['year'] >= 1990) & (no_nulls_rows['year'] <= 2024)]
+    df_continents = df[["continent", "year", "population", "biofuel_consumption", "hydro_consumption", "other_renewable_consumption", "renewables_consumption", "solar_consumption", "wind_consumption"]]
+    # Filters the rows that have no data in the columns of interest
+    filtered_df = df_continents.dropna(subset=["biofuel_consumption", "hydro_consumption", "other_renewable_consumption", "renewables_consumption", "solar_consumption", "wind_consumption"], how='all')
+    # Filters the rows that have no data in the population column
+    null_population_continents = df.groupby("continent").filter(lambda x: x["population"].isna().all())["continent"].unique()
+    # Junta os filtros e coloca o intervalo de tempo desejado
+    new_df = filtered_df[~filtered_df["continent"].isin(null_population_continents) & (filtered_df["year"].between(1990, 2024))]
     return new_df
 
 # Calls the function to create the new DataFrame
