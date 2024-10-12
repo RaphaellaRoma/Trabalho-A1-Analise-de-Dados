@@ -23,7 +23,28 @@ df_auxiliary = df.set_index(['country', 'year'])
 
 
 def plot_country_energy_gdp(df, country, ax, column, colors):
-    """Plota o consumo de energia fóssil e PIB para um determinado país."""
+    """
+    Plota o consumo de energia fóssil e o PIB para um determinado país ao longo do tempo.
+
+    Parameters
+    ----------
+    df : DataFrame
+        DataFrame com os dados de energia e PIB.
+    country : str
+        Nome do país a ser plotado.
+    ax : matplotlib.axes.Axes
+        Eixo para plotar o gráfico de consumo de energia fóssil.
+    column : str
+        Coluna do DataFrame que representa o consumo de energia fóssil per capita.
+    colors : list
+        Lista de cores para o gráfico. A primeira cor será usada para o consumo de energia, 
+        e a segunda cor será usada para o PIB.
+
+    Returns
+    -------
+    None.
+        A função plota o gráfico, sem retornar valores.
+    """
     paises_selecionados = df.loc[country]
     
     # Gráfico de linhas para o consumo de energia fóssil
@@ -47,7 +68,19 @@ def plot_country_energy_gdp(df, country, ax, column, colors):
     
 # Função para plotar os 9 países com maior consumo de energia fóssil
 def plot_top_9_countries(df):
-    """Plota um grid dos 9 países com maior consumo médio de energia fóssil."""
+    """
+    Plota um grid 3x3 dos 9 países com maior consumo médio de energia fóssil per capita.
+
+    Parameters
+    ----------
+    df : DataFrame
+        DataFrame com os dados de energia e PIB, agrupados por país e ano.
+
+    Returns
+    -------
+    None.
+        O gráfico é salvo como um arquivo PNG no diretório '../plots/'.
+    """
     
 #    df.set_index(['country', 'year'], inplace=True)
     
@@ -83,7 +116,19 @@ def plot_top_9_countries(df):
 
 # Função para plotar os 9 países com menor consumo de energia fóssil
 def plot_lower_9_countries(df):
-    """Plota um grid dos 9 países com menor consumo médio de energia fóssil."""
+    """
+    Plota um grid 3x3 dos 9 países com menor consumo médio de energia fóssil per capita.
+
+    Parameters
+    ----------
+    df : DataFrame
+        DataFrame com os dados de energia e PIB, agrupados por país e ano.
+
+    Returns
+    -------
+    None.
+        O gráfico é salvo como um arquivo PNG no diretório '../plots/'.
+    """
     
 #    df.set_index(['country', 'year'], inplace=True)
     
@@ -120,7 +165,21 @@ plot_lower_9_countries(df_auxiliary)
 
 
 def world(df, energy):
-    """Plota o consumo de energia fóssil e PIB no Mundo"""
+    """
+    Plota o consumo de energia fóssil e o PIB global ao longo do tempo.
+
+    Parameters
+    ----------
+    df : DataFrame
+        DataFrame com os dados de energia e PIB.
+    energy : str
+        Coluna do DataFrame que representa o tipo de energia a ser plotado (e.g., 'fossil_energy_per_capita').
+
+    Returns
+    -------
+    None.
+        A função plota o gráfico, sem retornar valores.
+    """
     # Criar a figura e os eixos
     fig, ax = plt.subplots(figsize=(10, 6))
     
@@ -144,7 +203,19 @@ def world(df, energy):
 
 
 def energy_gdp_correlation(df):
+    """
+    Calcula e plota as contagens de países classificados por níveis de correlação (alta, moderada e baixa) entre PIB e consumo de diferentes tipos de energia fóssil.
 
+    Parameters
+    ----------
+    df : DataFrame
+        DataFrame com os dados de energia e PIB, agrupados por país.
+
+    Returns
+    -------
+    None.
+        O gráfico de barras é salvo como um arquivo PNG no diretório '../plots/'.
+    """
     # Dicionário para armazenar as contagens de correlação
     correlation_counts = {
         'Energy Type': [],
