@@ -5,12 +5,13 @@ Students:
 * Maria Clara Pereira de Souza
 * Raphaella Roma Mendes Alves
 
-## The project
+## Sobre o Projeto
 
-We developed hypotheses based on global energy production and consumption data, spanning from 1900 to 2024, available at [Our World in Data](https://ourworldindata.org/energy). Below is the work structure:
+Desenvolvemos hipóteses baseadas em dados globais de produção e consumo de energia, abrangendo de 1900 a 2024, disponíveis em [Our World in Data](https://ourworldindata.org/energy). Abaixo está a estrutura de trabalho:
 
-* `data`: contains the .cvs file with the raw data.
-* `plots`: contais the final visualizations produced.
-* `src`: contains the Python scripts, including functions for data cleaning and graph plotting.
-* `main`: calls the functions from the other modules to run the analysis.
-* `requirements`: Lists the necessary dependencies and their versions for running the analysis.
+* `data`: contém o arquivo .cvs com os dados brutos.
+* `plots`: contém as visualizações finais produzidas.
+* `src`: contém os scripts Python, incluindo funções para limpeza de dados e plotagem de gráficos.
+* `requirements`: Lista as dependências necessárias e suas versões para execução da análise.
+
+  Obs: Cada módulo deverá ser executado separadamente.

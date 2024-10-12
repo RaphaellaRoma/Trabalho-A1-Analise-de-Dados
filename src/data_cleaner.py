@@ -1,9 +1,3 @@
-# -*- coding: utf-8 -*-
-"""
-Created on Tue Oct  8 11:52:47 2024
-
-@author: raphy
-"""
 import numpy as np
 import pandas as pd
 
@@ -13,14 +7,19 @@ df = pd.read_csv("..\data\World Energy Consumption.csv")
 
 columns = df.columns
 
-def renewable_energy_production_frame(df):
-    # country, year, bio_fuel, hydro, renewables, other_renewables, solar, wind, electricity_demand, electricity_demand_per_capita, electricity_generation
-    pass
-def renewable_energy_consumption_frame(df):
-    # country, year, bio_fuel, hydro, renewables, other_renewables, solar, wind
-    pass
-
 def GDP_and_fossil_energy_consumption(df):
+    """
+    Gera um df agrupado por país com todas colunas necessárias para a análise 
+
+    Parameters
+    ----------
+    df : TYPE
+
+    Returns
+    -------
+    new_df : TYPE
+
+    """
     # coal, fossil gas, oil, GDP, country
     df_fossil_energy = df[['country','year','gdp','coal_cons_per_capita','fossil_energy_per_capita','gas_energy_per_capita','oil_energy_per_capita']]
     
@@ -104,13 +103,57 @@ GDP_and_fossil_energy_frame = GDP_and_fossil_energy_consumption(df)
 
 # Limpeza de dados para a Hipótese 3
 def demand_and_production(df):
+    """
+    Gera um novo df com as colunas necessárias para a análise 
+
+    Parameters
+    ----------
+    df : TYPE
+
+    Returns
+    -------
+    df_clean : TYPE
+
+    """
+    # A coluna country contém continentes e blocos econômicos, como só queremos analisar os países vamos eliminar os que não são
+    # Criamos uma lista com todos os nomes que aparecem na coluna country
+    # unique_countries = df['country'].unique().tolist() 
+    # print(unique_countries)
+    # Usando o chatgpt para avaliar quais nomes não são de países, geramos a lista non_countries
+    non_countries = [
+    'ASEAN (Ember)', 'Africa', 'Africa (EI)', 'Africa (Ember)', 'Africa (Shift)', 
+    'Asia', 'Asia & Oceania (EIA)', 'Asia (Ember)', 'Asia Pacific (EI)', 
+    'Asia and Oceania (Shift)', 'Australia and New Zealand (EIA)', 'CIS (EI)', 
+    'Central & South America (EIA)', 'Central America (EI)', 'Central and South America (Shift)', 
+    'Democratic Republic of Congo', 'EU28 (Shift)', 'East Germany (EIA)', 'Eastern Africa (EI)', 
+    'Eurasia (EIA)', 'Eurasia (Shift)', 'Europe', 'Europe (EI)', 'Europe (Ember)', 
+    'Europe (Shift)', 'European Union (27)', 'European Union (EIA)', 'Falkland Islands', 
+    'G20 (Ember)', 'G7 (Ember)', 'Hawaiian Trade Zone (EIA)', 'High-income countries', 
+    'IEO - Africa (EIA)', 'IEO - Middle East (EIA)', 'IEO OECD - Europe (EIA)', 
+    'Latin America and Caribbean (Ember)', 'Low-income countries', 'Lower-middle-income countries', 
+    'Mexico, Chile, and other OECD Americas (EIA)', 'Middle Africa (EI)', 'Middle East (EI)', 
+    'Middle East (EIA)', 'Middle East (Ember)', 'Middle East (Shift)', 'Non-OECD (EI)', 
+    'Non-OECD (EIA)', 'Non-OPEC (EI)', 'Non-OPEC (EIA)', 'North America', 'North America (EI)', 
+    'North America (Ember)', 'North America (Shift)', 'OECD (EI)', 'OECD (EIA)', 'OECD (Ember)', 
+    'OECD (Shift)', 'OECD - Asia And Oceania (EIA)', 'OECD - Europe (EIA)', 'OECD - North America (EIA)', 
+    'OPEC (EI)', 'OPEC (EIA)', 'OPEC (Shift)', 'OPEC - Africa (EIA)', 'OPEC - South America (EIA)', 
+    'Oceania', 'Oceania (Ember)', 'Other Non-OECD - America (EIA)', 'Other Non-OECD - Asia (EIA)', 
+    'Other Non-OECD - Europe and Eurasia (EIA)', 'Persian Gulf (EIA)', 'Persian Gulf (Shift)', 
+    'South and Central America (EI)', 'South America', 'South Korea and other OECD Asia (EIA)', 
+    'U.S. Pacific Islands (EIA)', 'U.S. Territories (EIA)', 'USSR', 'United States Pacific Islands (Shift)', 
+    'United States Territories (Shift)', 'Upper-middle-income countries', 'Wake Island (EIA)', 
+    'Wake Island (Shift)', 'West Germany (EIA)', 'Western Africa (EI)', 'World', 'Yugoslavia'
+     ]
+    # Agora tiramso todas as linhas do df que comtém qualquer um desses não países
+    df = df[~df['country'].isin(non_countries)]
+    
     # Colunas necessárias para a análise 
-    df_columns_needed = df[['country','year','electricity_demand','renewables_electricity']]
+    df_columns_needed = df[['country','year','gdp','electricity_demand','renewables_electricity']]
     
     # Eliminação das linhas que não contenham a demanda ou a produção
     no_nulls_rows = df_columns_needed.dropna(subset=['electricity_demand','renewables_electricity'], how='any')
     
-    # Praticamente todos países contém dados entre 2000 e 2021, então a analíse será feita nesse período 
+    # Praticamente todos países contém dados entre 2000 e 2021, então a análise será feita nesse período 
     df_clean = no_nulls_rows[(no_nulls_rows['year'] >= 2000) & (no_nulls_rows['year'] <= 2021)]
     
     return df_clean
@@ -184,8 +227,48 @@ def renewable_energy_consumption_by_continent(df: pd.DataFrame) -> pd.DataFrame:
 renewable_energy_consumption_continental = renewable_energy_consumption_by_continent(df)
 
     
+# Limpeza de dados para a Hipótese 1
+def consumption_and_population(df):
     
+    # Colunas necessárias para a análise
+    df_consumption_and_population = df[["country", "year", "population", "primary_energy_consumption"]]
     
+    # Eliminação das linhas que não contém o consumo e as populações
+    no_nulls_row = df_consumption_and_population.dropna(subset=["population", "primary_energy_consumption"], how="any")
+    
+    # Todos os dados de no_nulls_row são necessários para a análise
+    df_clean = no_nulls_row
+    
+    return df_clean
+
+consumption_population = consumption_and_population(df)
+
+def energy_balance_and_import(df):
+    
+    # Criação do total de produções baseado nas colunas de produções informadas no df
+    df_productions = pd.DataFrame()    
+    df_productions["total_productions"] = df["coal_production"] + df["gas_production"] + df["oil_production"]
+    
+    # Criação do balanço de energia baseada na coluna da demanda de eletricidade informada no df e na coluna do total de produção informada em df_productions
+    df_energy_balance = pd.DataFrame()
+    df_energy_balance["energy_balance"] = df["electricity_demand"] - df_productions["total_productions"]
+    
+    # Colunas necessárias para a análise
+    df_energy_balance_and_import = pd.DataFrame()
+
+    df_energy_balance_and_import["year"] = df[["year"]]
+    df_energy_balance_and_import["energy_balance"] = df_energy_balance["energy_balance"]
+    df_energy_balance_and_import["net_elec_imports"] = df["net_elec_imports"]
+    
+    # Eliminação das linhas que não contém o balanço de energia e as importações
+    no_nulls_row = df_energy_balance_and_import.dropna(subset=["energy_balance", "net_elec_imports"], how="any")
+    
+    # Quando energy_balance e net_elec_imports são positivos, significa que houve demanda reprimida ou necessidade de importação, então a análise será feita para ambos os dados positivos
+    df_clean = no_nulls_row[(no_nulls_row["energy_balance"] > 0) & (no_nulls_row["net_elec_imports"] > 0)]
+    
+    return df_clean
+
+balance_import = energy_balance_and_import(df)
     
     
     
