@@ -7,14 +7,19 @@ df = pd.read_csv("..\data\World Energy Consumption.csv")
 
 columns = df.columns
 
-def renewable_energy_production_frame(df):
-    # country, year, bio_fuel, hydro, renewables, other_renewables, solar, wind, electricity_demand, electricity_demand_per_capita, electricity_generation
-    pass
-def renewable_energy_consumption_frame(df):
-    # country, year, bio_fuel, hydro, renewables, other_renewables, solar, wind
-    pass
-
 def GDP_and_fossil_energy_consumption(df):
+    """
+    Gera um df agrupado por país com todas colunas necessárias para a análise 
+
+    Parameters
+    ----------
+    df : TYPE
+
+    Returns
+    -------
+    new_df : TYPE
+
+    """
     # coal, fossil gas, oil, GDP, country
     df_fossil_energy = df[['country','year','gdp','coal_cons_per_capita','fossil_energy_per_capita','gas_energy_per_capita','oil_energy_per_capita']]
     
@@ -34,6 +39,18 @@ GDP_and_fossil_energy_frame = GDP_and_fossil_energy_consumption(df)
 
 # Limpeza de dados para a Hipótese 3
 def demand_and_production(df):
+    """
+    Gera um novo df com as colunas necessárias para a análise 
+
+    Parameters
+    ----------
+    df : TYPE
+
+    Returns
+    -------
+    df_clean : TYPE
+
+    """
     # A coluna country contém continentes e blocos econômicos, como só queremos analisar os países vamos eliminar os que não são
     # Criamos uma lista com todos os nomes que aparecem na coluna country
     # unique_countries = df['country'].unique().tolist() 
